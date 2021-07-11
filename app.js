@@ -20,8 +20,9 @@ client.connect(err => {
     console.log(err);
 
     app.post('/AddUsers', (req, res) => {
-        const userReq = res.body;
-        Users.find({ name: { $regex: new RegExp(userReq, "i") } })
+        const userReqName = req.body.name;
+        const userReq = req.body;
+        Users.find({ name: { $regex : new RegExp(userReqName, "i")} })
             .toArray((err, users) => {
                 if (users.length > 0) {
                     res.json({ error: 'Username Already Exist' })
