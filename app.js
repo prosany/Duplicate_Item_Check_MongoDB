@@ -19,15 +19,15 @@ client.connect(err => {
     const Users = client.db("organicDB").collection("users");
     console.log(err);
 
-    app.post('/AddUsers', (req, res) => {
+    app.post('/AddUsers', async (req, res) => {
         const userReqName = req.body.name;
         const userReq = req.body;
-        Users.find({ name: { $regex : new RegExp(userReqName, "i")} })
+        await Users.find({ name: { $regex : new RegExp(userReqName, "i")} })
             .toArray((err, users) => {
                 if (users.length > 0) {
                     res.json({ error: 'Username Already Exist' })
                 } else {
-                    Users.insertOne(userReq)
+                   Users.insertOne(userReq)
                         .then(result => {
                             res.send(result.insertedCount > 0)
                         })
