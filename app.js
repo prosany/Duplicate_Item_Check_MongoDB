@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
     res.status(200).json({result: 'Backend Server Running...'})
 })
 
-const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@cluster0.hgubw.mongodb.net/${process.env.DB}?retryWrites=true&w=majority`;
+const uri = `${process.env.DATABASE_URI}`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
     const Users = client.db("organicDB").collection("users");
